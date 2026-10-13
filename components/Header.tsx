@@ -49,7 +49,7 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <a href="#masterplan" className="inline-flex items-center gap-2.5 bg-copper-dark px-[18px] py-3 text-[13px] font-medium tracking-[.03em] text-ivory transition-colors duration-300 hover:bg-[#7d4824]">
+          <a href="#masterplan" className="inline-flex items-center gap-2.5 whitespace-nowrap bg-copper-dark px-[18px] py-3 text-[13px] max-[420px]:px-3 max-[420px]:text-[12px] font-medium tracking-[.03em] text-ivory transition-colors duration-300 hover:bg-[#7d4824]">
             Explore Properties
           </a>
           <button

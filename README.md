@@ -1,8 +1,10 @@
 # Fieldline Land Co. — Homepage
 
-Image-led homepage for a US land-development company: cinematic hero carousel, development carousel, interactive SVG master plan, scroll-driven boundary reveal, plot showcase, location, planning/transparency and footer.
+Editorial land-development homepage: survey-style hero, featured development with an aerial / site-plan toggle, a scroll-driven "land to plots" sequence, an interactive master plan, plot cards, location, approach, and an enquiry drawer.
 
-**Stack:** Next.js 15 (App Router) · TypeScript · Tailwind CSS v4 · Motion for React · `next/image`
+Ported from the *Fieldline Homepage* design (Hanken Grotesk · Instrument Serif · JetBrains Mono; ivory, evergreen and copper palette).
+
+**Stack:** Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4 · `next/image`
 
 ## Run it
 
@@ -13,27 +15,32 @@ npm run build      # production build
 npm start          # serve the build on :3100
 ```
 
-Requires Node 18.18+ (built with Node 22).
-
 ## Where things live
 
 | Path | What it is |
 | --- | --- |
-| `lib/data.ts` | All content: company details, developments, hero slides, images, showcase plots, surroundings |
-| `lib/siteplan.ts` | Master-plan geometry (feet), plot statuses, sample prices, documents, disclaimer |
-| `lib/plot-context.tsx` | Shared plot selection ("View on Master Plan" → selects + zooms the map) |
-| `components/HeroCarousel.tsx` | Full-screen carousel: Ken Burns, crossfades, progress bars, keyboard/swipe, autoplay pause |
-| `components/DevelopmentsCarousel.tsx` | "Explore the Land." horizontal scroll-snap carousel |
-| `components/MasterPlan.tsx` | Interactive plan: pan, zoom, pinch, filters, plot details, mobile bottom sheet |
-| `components/BiggerPicture.tsx` | Parallax aerial with scroll-drawn boundary overlay |
-| `components/PlotShowcase.tsx`, `Location.tsx`, `Planning.tsx`, `FinalCta.tsx`, `Footer.tsx` | Remaining sections |
-| `app/globals.css` | Design tokens (colours, fonts, easing) |
+| `lib/content.ts` | All project data: development facts, parcel and lot geometry, statuses, stages, approach pillars, location context, master-plan palettes, photography |
+| `lib/geometry.ts` | Seeded topographic contours and tree line (identical on server and client) |
+| `lib/site-state.tsx` | Shared state: plot selection, master-plan filters, "View on Master Plan", enquiry drawer, mobile menu |
+| `components/Hero.tsx` | Hero with survey overlay that draws itself on load |
+| `components/FeaturedDevelopment.tsx` | Aerial ↔ site-plan toggle and development facts |
+| `components/LandToPlots.tsx` | Sticky 4-stage scroll sequence (CSS variables `--p`, `--s1…--s4`) |
+| `components/MasterPlan.tsx` | Pan / zoom / pinch plan, plot details, filters, mobile bottom sheet |
+| `components/PlotDiscovery.tsx` | "Plot by Plot" cards with filters and "View on Master Plan" |
+| `components/Location.tsx`, `Approach.tsx`, `ClosingCta.tsx`, `Footer.tsx`, `EnquiryDrawer.tsx` | Remaining sections |
+| `app/globals.css` | Design tokens, shared type and button styles, animations |
+
+## Settings
+
+In `lib/content.ts`:
+
+- `PLAN_STYLE`: master-plan colourway, `"evergreen"` (default) or `"ivory"`
+- `SHOW_STATUS_LABELS`: status text under each plot number on the plan
+- `SHOW_SURVEY_OVERLAY`: the boundary / coordinate overlay on the hero
 
 ## Before launch
 
-- **Replace sample data.** Development names, acreages, plot counts, prices, statuses and drive times are placeholders and are labelled "Sample data" / "To be verified" on the page.
-- **Replace the plan geometry** in `lib/siteplan.ts` with the verified boundary survey and recorded subdivision plat. Plot areas are computed from the polygons.
-- **Company name and contact details** ("Fieldline Land Co.") are placeholders in `lib/data.ts` and `components/ui.tsx` (wordmark).
-- **Photography** is from Unsplash and only represents the setting. Swap in real site photography.
-- The Bigger Picture overlay coordinates are tied to the current photo's framing (16:9, mirrored). Re-plot them if you change that image.
-# design-1
+- **Replace the bracketed placeholders** (`[Development Name]`, `[City, State]`, `[Phone]`, `[Company Legal Name]` …) and the sample lot data with verified project details.
+- **Photography** comes from Unsplash stand-ins. Each entry in `PHOTOS` says which shot the design calls for.
+- **The enquiry form sends nothing.** It's a front-end prototype; connect it to a form endpoint or CRM in `components/EnquiryDrawer.tsx`.
+- The page is set to `noindex` (`app/layout.tsx`) while it shows sample data. Remove that when it goes live.
